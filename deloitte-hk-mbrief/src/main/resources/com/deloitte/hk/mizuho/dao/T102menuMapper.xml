@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.deloitte.hk.mizuho.dao.T102menuMapper" >
+  <resultMap id="BaseResultMap" type="com.deloitte.hk.mizuho.dao.model.T102menu" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="menuid" property="menuid" jdbcType="VARCHAR" />
+    <result column="parentid" property="parentid" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="applicationid" property="applicationid" jdbcType="VARCHAR" />
+    <result column="righttype" property="righttype" jdbcType="INTEGER" />
+    <result column="mtype" property="mtype" jdbcType="INTEGER" />
+    <result column="orderno" property="orderno" jdbcType="INTEGER" />
+    <result column="mlevel" property="mlevel" jdbcType="INTEGER" />
+    <result column="descmemo" property="descmemo" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="pagetype" property="pagetype" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, menuid, parentid, title, url, applicationid, righttype, mtype, orderno, mlevel, 
+    descmemo, icon, pagetype
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t102_menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t102_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.deloitte.hk.mizuho.dao.model.T102menu" >
+    insert into t102_menu (id, menuid, parentid, 
+      title, url, applicationid, 
+      righttype, mtype, orderno, 
+      mlevel, descmemo, icon, 
+      pagetype)
+    values (#{id,jdbcType=INTEGER}, #{menuid,jdbcType=VARCHAR}, #{parentid,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{applicationid,jdbcType=VARCHAR}, 
+      #{righttype,jdbcType=INTEGER}, #{mtype,jdbcType=INTEGER}, #{orderno,jdbcType=INTEGER}, 
+      #{mlevel,jdbcType=INTEGER}, #{descmemo,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
+      #{pagetype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.deloitte.hk.mizuho.dao.model.T102menu" >
+    insert into t102_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="menuid != null" >
+        menuid,
+      </if>
+      <if test="parentid != null" >
+        parentid,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="applicationid != null" >
+        applicationid,
+      </if>
+      <if test="righttype != null" >
+        righttype,
+      </if>
+      <if test="mtype != null" >
+        mtype,
+      </if>
+      <if test="orderno != null" >
+        orderno,
+      </if>
+      <if test="mlevel != null" >
+        mlevel,
+      </if>
+      <if test="descmemo != null" >
+        descmemo,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="pagetype != null" >
+        pagetype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="menuid != null" >
+        #{menuid,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationid != null" >
+        #{applicationid,jdbcType=VARCHAR},
+      </if>
+      <if test="righttype != null" >
+        #{righttype,jdbcType=INTEGER},
+      </if>
+      <if test="mtype != null" >
+        #{mtype,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null" >
+        #{orderno,jdbcType=INTEGER},
+      </if>
+      <if test="mlevel != null" >
+        #{mlevel,jdbcType=INTEGER},
+      </if>
+      <if test="descmemo != null" >
+        #{descmemo,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="pagetype != null" >
+        #{pagetype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.deloitte.hk.mizuho.dao.model.T102menu" >
+    update t102_menu
+    <set >
+      <if test="menuid != null" >
+        menuid = #{menuid,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        parentid = #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationid != null" >
+        applicationid = #{applicationid,jdbcType=VARCHAR},
+      </if>
+      <if test="righttype != null" >
+        righttype = #{righttype,jdbcType=INTEGER},
+      </if>
+      <if test="mtype != null" >
+        mtype = #{mtype,jdbcType=INTEGER},
+      </if>
+      <if test="orderno != null" >
+        orderno = #{orderno,jdbcType=INTEGER},
+      </if>
+      <if test="mlevel != null" >
+        mlevel = #{mlevel,jdbcType=INTEGER},
+      </if>
+      <if test="descmemo != null" >
+        descmemo = #{descmemo,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="pagetype != null" >
+        pagetype = #{pagetype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.deloitte.hk.mizuho.dao.model.T102menu" >
+    update t102_menu
+    set menuid = #{menuid,jdbcType=VARCHAR},
+      parentid = #{parentid,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      applicationid = #{applicationid,jdbcType=VARCHAR},
+      righttype = #{righttype,jdbcType=INTEGER},
+      mtype = #{mtype,jdbcType=INTEGER},
+      orderno = #{orderno,jdbcType=INTEGER},
+      mlevel = #{mlevel,jdbcType=INTEGER},
+      descmemo = #{descmemo,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      pagetype = #{pagetype,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,101 @@
+<!DOCTYPE html><html lang="en" class="no-js">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />		<title>MIZUHO</title>	<meta content="width=device-width, initial-scale=1.0" name="viewport" />	<META HTTP-EQUIV="pragma" CONTENT="no-cache">	<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">	<META HTTP-EQUIV="expires" CONTENT="0">	<meta content="" name="description" />	<meta content="" name="author" />	
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="media/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
+	<link href="media/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="media/css/style-metro.css" rel="stylesheet" type="text/css"/>
+	<link href="media/css/style.css" rel="stylesheet" type="text/css"/>
+	<link href="media/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+	<link href="media/css/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+	<link href="media/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+	<!-- END GLOBAL MANDATORY STYLES -->
+	<!-- BEGIN PAGE LEVEL STYLES -->
+	<link href="media/css/login.css" rel="stylesheet" type="text/css"/>
+	<!-- END PAGE LEVEL STYLES -->	<link href="res/jeasyui/themes/gray/easyui.css" type="text/css" rel="stylesheet">	<link href="res/jeasyui/themes/icon.css" type="text/css" rel="stylesheet">
+	<link rel="shortcut icon" href="media/image/favicon.ico" />
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="login" style="margin-top: 100px !important">
+	<!-- BEGIN LOGO -->
+	<div class="logo" width="150px">
+		<!--img src="media/image/logo-big.png" alt="" /--> 		<label style="color: #e23f3f;font-size: 22px; font-weight: bold">MIZUHO</label>
+	</div>
+	<!-- END LOGO -->
+	<!-- BEGIN LOGIN -->
+	<div class="content">
+		<!-- BEGIN LOGIN FORM -->
+		<form class="form-vertical login-form">
+			<h3 class="form-title" style="text-align: center">Login</h3>
+			<div class="alert alert-error hide">
+				<button class="close" data-dismiss="alert"></button>
+				<span>Enter any username and password.</span>
+			</div>
+			<div class="control-group">
+				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+				<label class="control-label visible-ie8 visible-ie9">Username</label>
+				<div class="controls">
+					<div class="input-icon left">
+						<i class="icon-user"></i>
+						<input class="m-wrap placeholder-no-fix" type="text" placeholder="Username" id="loginid" name="loginid"/>
+					</div>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label visible-ie8 visible-ie9">Password</label>
+				<div class="controls">
+					<div class="input-icon left">
+						<i class="icon-lock"></i>
+						<input class="m-wrap placeholder-no-fix" type="password" placeholder="Password" id="loginpwd" name="loginpwd"/>
+					</div>
+				</div>
+			</div>
+			<div class="form-actions">				<!-- 
+				<label class="checkbox">
+					<input type="checkbox" id="rememberme" name="rememberme" onchange="remeberChg()" value="" /> 记住用户名
+				</label>				  -->
+				<button type="button" class="btn green pull-right" onclick="loginto()">Login <i class="m-icon-swapright m-icon-white"></i></button>
+			</div>
+			<!-- div class="forget-password">
+				<p>
+					忘记密码 , 请联系管理员重置您的密码.
+				</p>
+			</div-->
+		</form>
+	</div>
+	<!-- END LOGIN -->
+	<!-- BEGIN COPYRIGHT -->
+	<div class="copyright">
+		&copy; 2017 Deloitte Advisory Limited.
+	</div>	<div id="sysDialog" action="close" execflag="noexec" closed="true" class="easyui-dialog" title="提示" style="width:400px;height:200px"	    data-options="iconCls:'icon-save',resizable:true,modal:true,	    buttons:[{	    	text:'Confirm',	    	handler:function(){sysDialogSave()}	    },{	    	text:'Close',	    	handler:function(){sysDialogClose()}	    }]">	    <div id="sysDialog_Content" style="margin: 50px auto;text-align:center;font-size:medium"></div>	</div>
+	<script src="media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+	<script src="media/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+	<script src="media/js/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+	<script src="media/js/bootstrap.min.js" type="text/javascript"></script>
+	<!--[if lt IE 9]>
+	<script src="media/js/excanvas.min.js"></script>
+	<script src="media/js/respond.min.js"></script>  
+	<![endif]-->   
+	<script src="media/js/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script src="media/js/jquery.blockui.min.js" type="text/javascript"></script>
+	<script src="media/js/jquery.cookie.min.js" type="text/javascript"></script>
+	<script src="media/js/jquery.uniform.min.js" type="text/javascript" ></script>
+	<!-- END CORE PLUGINS -->
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<script src="media/js/jquery.validate.min.js" type="text/javascript"></script>
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->	<script src="res/jeasyui/jquery.easyui.min.js" type="text/javascript"></script>
+	<script src="media/js/app.js" type="text/javascript"></script>
+	<script src="media/js/login.js" type="text/javascript"></script>	<script src="js/util.min.js" type="text/javascript"></script>	<script src="js/config.js" type="text/javascript"></script>
+	<!-- END PAGE LEVEL SCRIPTS --> 
+	<script>	var service;	var applicationid;
+	jQuery(document).ready(function() {		var loginid = $.cookie('loginid');		var rememberme = $.cookie('rememberme');		if (rememberme=="true") {			$("#loginid").val(loginid);			$("#rememberme").prop("checked", true);		}				
+		App.init();		  
+		Login.init();		  		//window.parent.wrapSlimScroll($(".content")[0]);		service = UrlParm.parm("service");		  		//role_type = "admin";		document.onkeydown = function(event_e){  		      if(window.event) {  		          event_e = window.event;  		      }  				      var int_keycode = event_e.charCode||event_e.keyCode;  		      if( int_keycode == '13' ) {  		          //your handler function,please.  		          loginto();  		          return false;  		      }  		 }		
+	});		function remeberChg() {		//alert(11);		if ($('#rememberme').prop('checked')==true) {			$.cookie("rememberme", "true", { expires: 7 });			var loginid = $("#loginid").val();			$.cookie("loginid", loginid, { expires: 7 });		} else {			$.cookie("rememberme", "false", { expires: -1 });			$.cookie("loginid", "", { expires: -1 });		}	}	function loginto() {		var loginid = $("#loginid").val();		var loginpwd = $("#loginpwd").val();		var param = Object();		param["loginid"] = loginid;		param["loginpwd"] = loginpwd;		$.ajax({			type: "POST",			url: webProjRoot + "login/login.action?tmpStamp="+new Date(),			async: false,			data: param,			dataType: "json",    		contentType:"application/x-www-form-urlencoded",			success: function(resp){				if (resp.auth == true) {					if ($('#rememberme').prop('checked')==true) {						$.cookie("rememberme", "true", { expires: 7 });												$.cookie("loginid", loginid, { expires: 7 });					} else {						$.cookie("rememberme", "false", { expires: -1 });						$.cookie("loginid", "", { expires: -1 });					}										window.top.location.href= webProjRoot + 'main.html?role=' + resp.role + "&token=" + resp.token + "&loginid=" + loginid + "&isallowedit="+resp.isallowedit;				}else{					showDiag("Username or password error！", "noexec");					//window.top.location.href= webProjRoot + 'index.html?service=' + service + '&applicationid='+applicationid;				}						}		});	}		function showDiag(content, execflag) {		$("#sysDialog").attr("execflag", execflag);		$("#sysDialog").dialog("open");		$("#sysDialog_Content").text(content);	}	function closeDiag() {		$("#sysDialog").dialog("close");	}	function sysDialogSave() {		closeDiag();		}	function sysDialogClose() {					closeDiag();	}
+	</script>
+	<!-- END JAVASCRIPTS -->
+<!-- END BODY -->
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="cache-control" content="no-cache" />
+<title>test</title>
+</head>
+<body>
+<div th:text="${auth}">这里是信息提示.</div>
+	userid:<input type="text" style="width:50px;" id="userid" value="admin"></input>
+	password:<input type="text" style="width:50px;" id="password" value="admin"></input>
+ 	<input tabindex="3" name="button" type="button" id="button" onClick="login()" value="测试login"></input>
+ 	<label id="resp_token"></label>
+ 	<p></p>
+ 	page:<input type="text" style="width:50px;" id="page" value="1"></input>
+ 	rows:<input type="text" style="width:50px;" id="rows" value="5"></input>
+ 	token:<input type="text" style="width:50px;" id="token" value=""></input>
+ 	<input tabindex="3" name="button" type="button" id="button" onClick="query()" value="测试querylist"></input>
+ 	<p></p>
+ 	status:<input type="text" style="width:50px;" id="status" value=""></input>
+ 	<input tabindex="3" name="button" type="button" id="button" onClick="edit()" value="测试edit"></input>
+</body>
+<script src="js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript">
+function login() {
+	var param = new Object();
+	param["service"] = "c3e90cea0d1848349a9465050ece7297";
+	param["loginid"] = $("#userid").val();
+	param["loginpwd"] = $("#password").val();
+	var str = JSON.stringify(param);
+
+	$.ajax({
+		type: "POST",
+		url: "/login/login.action?tmpStamp="+new Date(),
+		data: param,
+		//contentType:"application/json",
+		dataType: "json",
+		success: function(data){
+			//alert(JSON.stringify(data));
+			$("#resp_token").html(data.token);
+			$("#token").val(data.token);
+		}
+	});
+	
+	/**
+	$.ajax({
+		type: "POST",
+		url: "/login/login.action?tmpStamp="+new Date(),
+		async: false,
+		data: {loginid: "admin", loginpwd: "admin", service: "xxxx"},
+		dataType: "json",
+		success: function(resp){
+			alert(JSON.stringify(data));
+			$("#resp_token").html(data.token);
+			$("#token").val(data.token);		
+		}
+	});
+	**/
+}
+
+function edit() {
+	var param = new Object();
+	var status = $("#status").val();
+	param["userid"] = "admin";
+	param["order_id"] = "O20160822000001";
+	param["status"] = status;
+	var token = $("#token").val();
+	var str = JSON.stringify(param);
+	$.ajax({
+		type: "PUT",
+		url: "/order/updateorder?tmpStamp="+new Date(),
+		data: str,//'{"language":"en-US", "page":1,"rows":2}',//{appid : name, userid : pwd, password: password},//JSON.stringify(param)
+		contentType:"application/json",
+		dataType: "json",
+		beforeSend: function(request) {
+            request.setRequestHeader("Authorization", token);
+        },
+		success: function(data){
+			//alert(data.result);
+			alert(JSON.stringify(data));
+		}
+	})
+}
+
+function query() {
+	var param = new Object();
+	var page = $("#page").val();
+	var rows = $("#rows").val();
+	param["page"] = parseInt(page);
+	param["rows"] = parseInt(rows);
+	param["language"] = "en-US";
+	//param["userid"] = "ling.lu@qq.com";
+	param["appid"] = "c3e90cea0d1848349a9465050ece7297";
+	param["status"] = "ODR_GOODS_PRODUCT";
+	//param["order_num"] = "DC000122343";
+	//param["buyername"] = "2";
+	param["dependme"] = 0;
+	var token = $("#token").val();
+	var str = JSON.stringify(param);
+	$.ajax({
+		type: "POST",
+		url: "/order/queryorders?tmpStamp="+new Date(),
+		data: str,//'{"language":"en-US", "page":1,"rows":2}',//{appid : name, userid : pwd, password: password},//JSON.stringify(param)
+		contentType:"application/json",
+		dataType: "json",
+		beforeSend: function(request) {
+            request.setRequestHeader("Authorization", token);
+        },
+		success: function(data){
+			//alert(data.result);
+			alert(JSON.stringify(data));
+		}
+	})
+}
+</script>
+</html>

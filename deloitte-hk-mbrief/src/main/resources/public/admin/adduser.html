@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html style="overflow-x: visible; overflow-y: visible;">
+
+<head>
+
+	<meta charset="utf-8" />
+	<title>assign project</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<link href="../res/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../res/bootstrap/css/bootstrapValidator.min.css" rel="stylesheet">
+	<link href="../res/jeasyui/themes/default/easyui.css" type="text/css" rel="stylesheet">
+	<link href="../res/jeasyui/themes/icon.css" type="text/css" rel="stylesheet">
+	<link href="../res/jeasyui/demo.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+<form class="form-horizontal" role="form" id="adduserForm">
+	<div class="form-group">
+		<label for="loginId" class="col-sm-2 control-label">Login Id</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" id="loginId" name="loginId" placeholder="Input login id">
+		</div>
+		<label for="name" class="col-sm-2 control-label">User Name</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" id="name" name="name" placeholder="Input user name">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="loginPwd" class="col-sm-2 control-label">Password</label>
+		<div class="col-sm-3">
+			<input type="password" class="form-control" id="loginPwd" name="loginPwd" placeholder="Input login pwd">
+		</div>
+		<label for="cfmloginPwd" class="col-sm-2 control-label">Confirm password</label>
+		<div class="col-sm-3">
+			<input type="password" class="form-control" id="cfmloginPwd" name="cfmloginPwd" placeholder="Confirm login name">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="roleDefault" class="col-sm-2 control-label">User Role</label>
+		<div class="col-sm-3">
+			<select id="roleDefault" class="form-control" name="roleDefault">
+				<option value="">-select-</option>
+		        <option value="admin">Administrator</option>		      
+		        <option value="finace">Finace</option>
+		        <option value="oper">Operator</option>
+			</select>
+		</div>
+		<label for="remark" class="col-sm-2 control-label">Remark</label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" id="remark" name="remark" placeholder="Remark">
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-3 col-sm-push-7">
+			<input type="button" onclick="adduser()" class="btn btn-default" value="Add"></input>
+			<input type="reset" class="btn btn-default" value="Reset" style="float: right"></input>
+		</div>
+	</div>
+</form>
+
+
+<script src="../media/js/jquery-1.10.1.min.js" type="text/javascript"></script>
+<script src="../media/js/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<script src="../media/js/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="../res/bootstrap/js/bootstrap.min.js"  type="text/javascript"></script>
+<script src="../res/bootstrap/js/bootstrapValidator.min.js"  type="text/javascript"></script>
+<script src="../res/jeasyui/jquery.easyui.min.js" type="text/javascript"></script>
+<script src="../js/util.min.js" type="text/javascript"></script>
+<script src="../js/mydate.js" type="text/javascript"></script>
+<script src="../js/config.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+
+$(document).ready(function(){
+	$('#adduserForm').bootstrapValidator({
+		message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon',//glyphicon-ok
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+        	loginId: {
+                message: 'The loginId is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'The loginId is required and can\'t be empty'
+                    },
+                    remote: {
+	                    url: webProjRoot + "login/checkUserid.action?tmpStamp="+new Date(),
+	                    delay: 2000,
+	                    type: 'POST',
+	                    data: function(validator) {
+                            return {
+                            	token: window.parent.token,
+                                userid: $('[name="loginId"]').val()
+                            };
+                         },
+	                    message: 'The loginId has been registed'
+	                },
+                    stringLength: {
+                    	min: 0,
+                        max: 20,
+                        message: 'The loginId must be less than 20 characters long'
+                    }
+                }
+            },
+            loginPwd: {
+                validators: {
+                    notEmpty: {
+                        message: 'The password is required and can\'t be empty'
+                    },
+                    stringLength: {
+                        min: 6,
+                        max: 20,
+                        message: 'The password must be more than 6 and less than 30 characters long'
+                    }
+                }
+            },
+            cfmloginPwd: {
+                validators: {
+                    notEmpty: {
+                        message: 'The confirm password is required and can\'t be empty'
+                    },
+		            identical: {
+		            	field: 'loginPwd',
+		            	message: 'The password and its confirm are not the same'
+		            }
+                }                
+            },
+            roleDefault: {
+                validators: {
+                    notEmpty: {
+                        message: 'The role is required and can\'t be empty'
+                    }
+                }
+            },
+            remark: {
+                validators: {
+                    stringLength: {
+                    	min: 0,
+                    	max: 20,
+                        message: 'The remark must be less than 20 characters long'
+                    }
+                }
+            }
+        }
+	});
+});
+
+function adduser() {
+	$('#adduserForm').data('bootstrapValidator').validate();
+	if (!$('#adduserForm').data('bootstrapValidator').isValid()) {
+		//alert("no pass");
+	} else {
+		var loginId = $("#loginId").val();
+		var remark = $("#remark").val();
+		var name = $("#name").val();
+		var loginPwd = $("#loginPwd").val();
+		var cfmloginPwd = $("#cfmloginPwd").val();
+		var roleDefault = $("#roleDefault").val();
+		/**
+		if (loginPwd != cfmloginPwd) {
+			window.parent.showDiag("Password and confirm password is not same!", "noexec");
+			return;
+		}**/
+		var param = new Object();
+		param["token"] = window.parent.token;
+		param["userid"] = loginId;
+		param["userpwd"] = loginPwd;
+		param["username"] = name;
+		param["remark"] = remark;
+		param["roleid"] = roleDefault;
+		
+		$.ajax({
+			type: "POST",
+			url: webProjRoot + "login/addUser.action?tmpStamp="+new Date(),
+			async: true,
+			data: JSON.stringify(param),
+			dataType: "json",
+			contentType:"application/json",
+			success: function(resp){
+				if (resp.respcode=='0000') {					
+					alert("Add user success!");
+				} else {
+					alert("Add user fail!");
+				}
+			}
+		});
+	}
+	
+}
+
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,43 @@
+/* order status */
+var webProjRoot = "/hk/"
+var webProjPort = 5577
+//var webProjRoot = "/"
+var OrderStausEnum = new Object();
+OrderStausEnum.ORD_REJECT = 1;
+OrderStausEnum.ORD_REJECT_MSG = "请求";
+/* order type*/
+var ISEnum = new Object();
+ISEnum.YES = "200";
+ISEnum.YES_MSG = "是";
+ISEnum.NO = "300";
+ISEnum.NO_MSG = "否";
+/* Model name */
+var ModelEnum = new Object();
+ModelEnum.REGIST_PROJ = "101";
+ModelEnum.REGIST_PROJ_MSG = "进入项目";
+ModelEnum.LOGOUT_PROJ = "102";
+ModelEnum.LOGOUT_PROJ_MSG = "退出项目";
+ModelEnum.MERGE_PROJ = "206";
+ModelEnum.MERGE_PROJ_MSG = "项目合并";
+ModelEnum.RELATION_PROJ = "207";
+ModelEnum.RELATION_PROJ_MSG = "项目关联";
+ModelEnum.MULTI_PROJ = "209";
+ModelEnum.MULTI_PROJ_MSG = "项目多方管理";
+ModelEnum.MULTI_PROJ_EDIT = "211";
+ModelEnum.MULTI_PROJ_EDIT_MSG = "项目多方编辑";
+ModelEnum.GROUP_PROJ = "212";
+ModelEnum.GROUP_PROJ_MSG = " 项目分组";
+var AuthModelEnum = new Object();
+AuthModelEnum.ALL = "100";
+AuthModelEnum.ALL_MSG = "所有权限";
+AuthModelEnum.READ = "200";
+AuthModelEnum.READ_MSG = "读权限";
+AuthModelEnum.WRITH = "300";
+AuthModelEnum.WRITH_MSG = "写权限";
+AuthModelEnum.NO = "400";
+AuthModelEnum.NO_MSG = "无权限";
+var ISInContryEnum = new Object();
+ISInContryEnum.INNER = "101";
+ISInContryEnum.INNER_MSG = "境内";
+ISInContryEnum.OUTTER = "102";
+ISInContryEnum.OUTTER_MSG = "境外";
